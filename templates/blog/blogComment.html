@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}<title> BlogComment </title>{% endblock %}
+{% block blogactive %}active{% endblock blogactive %}
+{% block body %}
+<div class="container">
+        <h2 class="blog-post-title">{{posts.title}}</h2>
+        <p class="blog-post-meta">{{posts.dateTime}} by <a href="/about">{{posts.author}}</a></p>
+        <p>{{posts.content|linebreaks}}</p>
+        <hr>
+        <p class="mx-4 text-muted ">see all posts from <a href="/{{posts.author}}" class="my-4 mr-4"><b>{{posts.author}}</b></a></p>
+   
+   {% with comments.count as total_comments %}
+   <h2>
+       {{total_comments}} comment{{total_comments|pluralize}}
+   </h2>
+   {% endwith %}
+   {% for comment in comments %}
+   <div class="container mr-auto"><hr><h5>{{comment.username}}</h5> <p class="text-muted">{{comment.date_comment}}</p>
+   <p>{{comment.message|linebreaks}}</p></div>
+   <hr>
+   {% empty %}
+   <p>there are no comments</p>
+   {% endfor %}
+   
+   {% if new_comment %}
+   <p>Your comment has been successfully added</p>
+   {% else %}
+     {% if user.is_authenticated %}
+   <h3>Add a comment :</h3>
+   
+   {% load crispy_forms_tags %}
+   <form method="post" style="margin-top: 1.3em;">
+          {{ comment_form | crispy }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary  btn-lg ">post</button>
+ </form><hr>
+    {% else %}
+   <h3 class="container-fluid my-4" style="background:black;color:white;border-radius:5%;">You have to login or sign up to leave a comment</h3>
+   
+   {% endif %}
+   {% endif %}
+</div>
+{% endblock %}
