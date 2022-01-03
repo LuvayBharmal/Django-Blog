@@ -42,15 +42,17 @@ class UserPostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
 
+if not LoginRequiredMixin:
+    print('Login is compulsary.')
+else:
+    class PostCreateView(LoginRequiredMixin, CreateView):
+        model = Post
+        fields = ['title', 'slug','content']
+        success_url = '/'
 
-class PostCreateView(LoginRequiredMixin, CreateView):
-    model = Post
-    fields = ['title', 'slug','content']
-    success_url = '/'
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+        def form_valid(self, form):
+            form.instance.author = self.request.user
+            return super().form_valid(form)
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

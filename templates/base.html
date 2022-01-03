@@ -35,10 +35,7 @@
         <li class="nav-item {% block blogactive %}{% endblock blogactive %}">
           <a class="nav-link" href="/blog">Blog</a>
         </li>
-        <li class="nav-item {% block postactive %}{% endblock postactive %}">
-          <a class="nav-link" href="/blog/post">New Post</a>
-        </li>
-      </ul>
+       </ul>
       <form method="get" action="/search" class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query"
           id="query">
@@ -46,6 +43,9 @@
 
         {% if user.is_authenticated %}
         <ul class="navbar-nav ml-auto">
+          <li class="nav-item {% block postactive %}{% endblock postactive %}">
+            <a class="nav-link" href="/blog/post">New Post</a>
+          </li>
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" <a aria-haspopup="true" aria-expanded="false">
           Welcome {{request.user}}
@@ -67,7 +67,7 @@
       </form>
     </div>
   </nav>
-  {% for message in messages%}
+  {% for message in messages %}
   <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
     <strong>Message :</strong> {{message}}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
