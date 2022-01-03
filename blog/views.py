@@ -24,7 +24,7 @@ class PostListView(ListView):
     model = Post
     template_name = 'blog/blogeHome.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
-    ordering = ['-date_posted']
+    #ordering = ['-date_posted']
     paginate_by = 5
 
 
@@ -42,10 +42,8 @@ class UserPostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
 
-if not LoginRequiredMixin:
-    print('Login is compulsary.')
-else:
-    class PostCreateView(LoginRequiredMixin, CreateView):
+
+class PostCreateView(LoginRequiredMixin, CreateView):
         model = Post
         fields = ['title', 'slug','content']
         success_url = '/'
